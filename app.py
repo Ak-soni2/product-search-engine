@@ -56,6 +56,7 @@ def search_products_by_category(products, category):
 
 
 # Heapify function for heap sort in Python
+# This function is used to maintain the heap property
 def heapify(products, n, i, sortByPrice):
     largest = i
     left = 2 * i + 1
