@@ -3,7 +3,7 @@ import pandas as pd
 import csv
 
 # Product Class
-class Product:
+class Product:   
     def __init__(self, name='', category='', price=0.0, rating=0.0):
         self.name = name
         self.category = category
