@@ -56,7 +56,7 @@ void linearSearch(vector<Product>& products, const string& query) {
     if (!found) cout << "No results found." << endl;
 }
 
-// MergeSort algorithm for sorting
+// Comparison functions for sorting
 bool compareByPriceAscending(const Product& a, const Product& b) {
     return a.price < b.price;
 }
@@ -73,6 +73,30 @@ bool compareByCategory(const Product& a, const Product& b) {
     return a.category < b.category;
 }
 
+// QuickSort implementation for sorting by rating
+int partition(vector<Product>& arr, int low, int high) {
+    float pivot = arr[high].rating;
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arr[j].rating > pivot) {  // Note: > for descending order
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+void quickSortByRating(vector<Product>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSortByRating(arr, low, pi - 1);
+        quickSortByRating(arr, pi + 1, high);
+    }
+}
+
+// MergeSort algorithm for other sorting options
 void merge(vector<Product>& arr, int left, int mid, int right, bool(*comp)(const Product&, const Product&)) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -115,6 +139,8 @@ int main() {
     loadProducts("products.csv", products);
 
     while (true) {
+        system("cls"); // Clear the console (Windows)
+        cout << "Product Search Engine" << endl;
         cout << "\nChoose an option:\n";
         cout << "1. Search product by name or category\n";
         cout << "2. View all products\n";
@@ -141,8 +167,8 @@ int main() {
             cin >> viewHistory;
             cin.ignore();
 
-            if (viewHistory == "yes" || viewHistory == "YES") {
-                cout << "\nSearch History:" << endl;
+            if (viewHistory == "yes" || viewHistory == "YES" || viewHistory == "Y" || viewHistory == "y") {
+                cout << "\nYour Search History:" << endl;
                 for (const auto& term : searchHistory) {
                     cout << "- " << term << endl;
                 }
@@ -158,7 +184,7 @@ int main() {
             cout << "\nProducts sorted by price (High to Low):" << endl;
             listAllProducts(products);
         } else if (choice == 5) {
-            mergeSort(products, 0, products.size() - 1, compareByRatingDescending);
+            quickSortByRating(products, 0, products.size() - 1);
             cout << "\nProducts sorted by rating (High to Low):" << endl;
             listAllProducts(products);
         } else if (choice == 6) {

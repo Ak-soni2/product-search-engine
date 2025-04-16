@@ -27,7 +27,7 @@ void displayProducts(const vector<Product>& products) {
     for (const auto& product : products) {
         cout << "-----------------------" << endl;
         cout << "Name: " << product.name << endl;
-        cout << "Price: $" << product.price << endl;
+        cout << "Price: ₹" << product.price << endl;
         cout << "Rating: " << product.rating << " stars" << endl;
         cout << "Category: " << product.category << endl;
     }
